@@ -66,3 +66,7 @@ CONSTRAINT spin_pro_fk foreign key(item_no,lot_no) references raw_materials(item
 CONSTRAINT check_prod_postive CHECK (m_prod >0));
 
 #create table spin.spinning_prod(mid char(4),m_date date,m_eb float,m_yarnCount int,m_waste float,
+
+#connection
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Luckyusa1';
+flush privileges;

@@ -20,10 +20,18 @@ select spinning_type.bid,sum(spinning_prod.m_prod) as building_prod from spinnin
 
 select item_no,item_name from raw_material_name where raw_material_name.item_no =(select t.item_code as maximum_used_amt from (select spinning_prod.item_no as item_code ,sum(raw_materials.qty) as item_qty_used from spinning_prod inner join raw_materials on spinning_prod.item_no=raw_materials.item_no and spinning_prod.lot_no=raw_materials.lot_no where m_date between '2019-10-11' and '2019-10-14' group by spinning_prod.item_no order by item_qty_used desc) as t limit 1);
 
-#connection
+select * from spin.workers;
+select * from spin.spinning_prod;
+select * from spin.working_details;
+select * from spin.workers;
+select * from spin.raw_material_name;
 
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Luckyusa1';
-flush privileges;
+#displaying production of all workers within given timeframe
+
+select workers.wid,workers.fname,workers.lname,spinning_prod.m_prod from spinning_prod inner join workers on spinning_prod.wid=workers.wid where m_date between '2019-10-11' and '2019-10-13';
+
+
+
 
 
 

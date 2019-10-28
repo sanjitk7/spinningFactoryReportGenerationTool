@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+        
+            td,
+            th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+        
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+        </style>
+        <h2>Spinning Mill Production Report</h2>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+<body>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>fname</th>
+            <th>lname</th>
+            <th>production_qty</th>
+        </tr>
+    </table>
+<script>
+        var workerPrdnAPI = "/workerPdn/?startDate=2019-10-11&endDate=2019-10-14";
+        var json = "";
+        $.getJSON(workerPrdnAPI)
+            .done(function (resp) {
+                json = resp;
+                var tr;
+
+                for (var i = 0; i < json.length; i++) {
+                    tr = $('<tr/>');
+                    console.log("json:", json[i]);
+                    tr.append("<td>" + json[i].wid + "</td>");
+                    tr.append("<td>" + json[i].fname + "</td>");
+                    tr.append("<td>" + json[i].lname + "</td>");
+                    tr.append("<td>" + json[i].worker_prod + "</td>");
+                    $('table').append(tr);
+                }
+            })
+            .fail(function (jqxhr, textStatus, error) {
+                var err = textStatus + ", " + error;
+                console.log("Request Failed: " + err);
+            });    
+</script>
+</body>
+</html>

@@ -3,8 +3,8 @@ use spin;
 #delete from spin.workers;
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Ram','Karthik','Operator',str_to_date('12/12/1995','%d/%m/%Y'),'A');
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Raj','Mohan','Supervisor',str_to_date('11/08/1994','%d/%m/%Y'),'B');
-insert into spin.workers(fname,lname,job_desc,dob,hid) values('Sanjit','Kumar','Manager',str_to_date('03/02/1990','%d/%m/%Y'),'A');
-insert into spin.workers(fname,lname,job_desc,dob,hid) values('Rohit','Rajesh','Operator',str_to_date('19/03/1995','%d/%m/%Y'),'C');
+insert into spin.workers(fname,lname,job_desc,dob,hid) values('Sanjit','Kumar','Manager',str_to_date('03/02/1990','%d/%m/%Y'),'A'),
+                                                             ('Rohit','Rajesh','Operator',str_to_date('19/03/1995','%d/%m/%Y'),'C');
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Jason','Carter','Operator',str_to_date('22/05/1999','%d/%m/%Y'),'A');
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Jim','Carraway','Operator',str_to_date('16/07/1991','%d/%m/%Y'),'C');
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Jay','Gatby','Operator',str_to_date('12/04/1992','%d/%m/%Y'),'C');
@@ -61,6 +61,7 @@ insert into spin.workers(fname,lname,job_desc,dob,hid) values('Clarence M', 'Mul
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Dayle', 'Carter', 'Operator', str_to_date('16/10/1993','%d/%m/%Y'), 'C');
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Katherin', 'Poole', 'Operator', str_to_date('15/02/1995','%d/%m/%Y'), 'B');
 insert into spin.workers(fname,lname,job_desc,dob,hid) values('Ferne', 'Rhodes', 'Operator', str_to_date('17/10/1998','%d/%m/%Y'), 'A');
+commit;
 
 insert into spin.spinning_type(m_id,m_type,bid) values('C01','CARDING','W');
 insert into spin.spinning_type(m_id,m_type,bid) values('C02','CARDING','W');
@@ -304,20 +305,5 @@ insert into spin.spinning_prod(m_id,m_date,m_eb,m_prod,m_yarn_count,m_waste,wid,
 insert into spin.spinning_prod(m_id,m_date,m_eb,m_prod,m_yarn_count,m_waste,wid,item_no,lot_no) values('W01',str_to_date('11/10/2019', '%d/%m/%Y'),9,290,10,9.0,23,'Py02',001);
 insert into spin.spinning_prod(m_id,m_date,m_eb,m_prod,m_yarn_count,m_waste,wid,item_no,lot_no) values('W02',str_to_date('12/10/2019', '%d/%m/%Y'),14,280,10,10.2,8,'Ct02',001);
 insert into spin.spinning_prod(m_id,m_date,m_eb,m_prod,m_yarn_count,m_waste,wid,item_no,lot_no) values('W03',str_to_date('13/10/2019', '%d/%m/%Y'),12,277,10,10.1,34,'Ct01',001);
-
-
-
-
-
-
-select * from spin.workers;
-select * from spin.spinning_prod;
-select * from spin.working_details;
-select * from spin.workers;
-select * from spin.raw_material_name;
-
-#displaying production of all workers within given timeframe
-
-select workers.wid,workers.fname,workers.lname,spinning_prod.m_prod from spinning_prod inner join workers on spinning_prod.wid=workers.wid where m_date between '2019-10-11' and '2019-10-13';
 
 

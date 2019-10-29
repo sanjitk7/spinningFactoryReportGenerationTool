@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Enter Production Detail
+
+        form(method='POST' action='/create_production')
+          div.form-group
+            label(for='wid') Worker Id:
+            input#name.form-control(type='text', placeholder='Enter worker Id' name='wid')
+          div.form-group
+            label(for='date') Date:
+            input#email.form-control(type='date', placeholder='select date' name='date')
+          div.form-group
+            label(for='productionQty') Favorite Book:
+            input#productionQty.form-control(type='text', placeholder='Enter production qty in Kilos' name='productionQty')
+          div.form-group
+            label(for='ebCharge') EB Charge:
+            input#ebCharge.form-control(type='text', placeholder='Enter EB charge in units' name='ebCharge')
+          div.form-group
+            label(for='yarnCount') Yarn Count:
+            input#yarnCount.form-control(type='dropdown', placeholder='Select yarn count' name='yarnCount')
+          
+          button.btn.btn-primary(type='submit') Save

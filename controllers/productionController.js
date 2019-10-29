@@ -40,9 +40,34 @@ exports.production_report = function(req, res) {
 	}
 };
 
+//Display last 3 days of production report
+exports.production_report_last_3_days = function(req, res) {
+	try {
+		console.log('inside prod report: production_report_last_3_days');
+		const startDate = '2019-10-11';
+		const endDate = '2019-10-14';
+		const queryString =
+			'SELECT workers.wid,workers.fname,workers.lname,SUM(spinning_prod.m_prod) ' +
+			'AS worker_prod FROM spinning_prod INNER JOIN workers ON spinning_prod.wid=workers.wid WHERE ' +
+			"m_date BETWEEN '" +
+			startDate +
+			"' AND '" +
+			endDate +
+			"' GROUP BY wid ORDER BY worker_prod ASC";
+		db.query(queryString, (err, rows, fields) => {
+			console.log(JSON.stringify(rows));
+			res.render('production_report', { title: 'Production Report', productions: rows });
+		});
+	} catch (e) {
+		console.log('in err catch');
+		log.error(e);
+	}
+};
+
 //Get prodcution report form
 exports.production_create_get = function(req, res) {
-	res.send('NOT IMPLEMNTED: Production create GET');
+	// res.send('NOT IMPLEMNTED: Production create GET');
+	res.render('create_production');
 };
 
 //Insert production report

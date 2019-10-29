@@ -1,11 +1,29 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #[em Spinning Mill Production Report ].
+    h1= title
+    p Welcome to #[em Spinning Mill Production Report ].
+    br
+    br
+    .container
+        form(method="get" action="/production/reports/last_3_days")
+            button(type="submit") Last 3 Days Report
 
+        form(method="get" action="/production/reports/last_week")
+            button(type="submit") Yesterday's Report
 
-//-   if error
-//-     p Error getting dynamic content.
-//-   else
-//-     p The library has the following record counts:
+        style(type="text/css").
+            button{
+                background-color:yellow;
+                height:50px;
+                width:100px;
+            }
+
+            button:hover{background-color:orange;}
+
+            button:focus{background-color:red;}
+
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1=title
+
+    div 
+        table.table.table-hover
+            tr
+                th WID
+                th First Name
+                th Last Name
+                th Production Qty (in Kilos)
+            each production in productions
+                tr
+                    td=production.wid
+                    td=production.fname
+                    td=production.lname
+                    td=production.worker_prod

@@ -16,8 +16,13 @@ router.get('/worker/:id', (req, res) => {
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Welcome to Spinning Mill Production Report' });
+// router.get('/', function(req, res, next) {
+// 	res.render('index', { title: 'Welcome to Spinning Mill Production Report' });
+// });
+
+// GET home page.
+router.get('/', function(req, res) {
+	res.redirect('/production_report');
 });
 
 // http://localhost:3000/workerPdn/?startDate=2019-10-11&endDate=2019-10-14

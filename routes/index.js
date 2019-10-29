@@ -89,8 +89,28 @@ router.get('/idleWorker', function(req, res) {
 				"' and '" +
 				endDate +
 				"'group by wid )";
-			db.query(queryString, (err, rows, fields) => {
-				res.json(rows);
+				db.query(queryString, (err, rows, fields) => {
+				let htmlTableRows = ``;
+				htmlTableRows += `<thead style="font-weight: 700;background-color: #dcdcdc;">
+                    <tr>
+                    <td>WID</td>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    </tr>
+                    </thead>`;
+				// Iterate of the rows in the data, use an ES6 "arrow function" to operate on each one
+				rows.forEach((row) => {
+					// Use ES6 string template to create HTML table rows
+					htmlTableRows += `<tr>
+                    <td style="border: 1px solid #7DCEA0;">${row.wid}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.fname}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.lname}</td>
+                </tr>`;
+				});
+
+				// HTML for a table
+				let htmlTable = `<table style="width:100%; border: 1px solid black;">${htmlTableRows}</table>`;
+				res.status(200).send(htmlTable);
 			});
 		} catch (e) {
 			log.error(e);
@@ -115,12 +135,35 @@ router.get('/machPdn', function(req, res) {
 				"' and '" +
 				endDate +
 				"'group by m_id";
-			db.query(queryString, (err, rows, fields) => {
-				res.json(rows);
+				db.query(queryString, (err, rows, fields) => {
+				let htmlTableRows = ``;
+				htmlTableRows += `<thead style="font-weight: 700;background-color: #dcdcdc;">
+                    <tr>
+                    <td>Machine ID</td>
+                    <td>Machine Production</td>
+                    <td>Machine Wastage</td>                   
+                    </tr>
+                    </thead>`;
+				// Iterate of the rows in the data, use an ES6 "arrow function" to operate on each one
+				rows.forEach((row) => {
+					// Use ES6 string template to create HTML table rows
+					htmlTableRows += `<tr>
+                    <td style="border: 1px solid #7DCEA0;">${row.m_id}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.machine_production}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.machine_waste}</td>
+                </tr>`;
+				});
+
+				// HTML for a table
+				let htmlTable = `<table style="width:100%; border: 1px solid black;">${htmlTableRows}</table>`;
+				res.status(200).send(htmlTable);
 			});
+
 		} catch (e) {
 			log.error(e);
 		}
+
+
 	} else {
 		res.sendStatus(400);
 		return;
@@ -141,8 +184,26 @@ router.get('/bdnPdn', function(req, res) {
 				"' and '" +
 				endDate +
 				"'group by bid";
-			db.query(queryString, (err, rows, fields) => {
-				res.json(rows);
+				db.query(queryString, (err, rows, fields) => {
+				let htmlTableRows = ``;
+				htmlTableRows += `<thead style="font-weight: 700;background-color: #dcdcdc;">
+                    <tr>
+                    <td>Building ID</td>
+                    <td>Building Production</td>
+                    </tr>
+                    </thead>`;
+				// Iterate of the rows in the data, use an ES6 "arrow function" to operate on each one
+				rows.forEach((row) => {
+					// Use ES6 string template to create HTML table rows
+					htmlTableRows += `<tr>
+                    <td style="border: 1px solid #7DCEA0;">${row.b_id}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.building_prod}</td>
+                </tr>`;
+				});
+
+				// HTML for a table
+				let htmlTable = `<table style="width:100%; border: 1px solid black;">${htmlTableRows}</table>`;
+				res.status(200).send(htmlTable);
 			});
 		} catch (e) {
 			log.error(e);
@@ -166,9 +227,26 @@ router.get('/rawMat', function(req, res) {
 				"' and '" +
 				endDate +
 				"' group by spinning_prod.item_no order by item_qty_used desc) as t limit 1)";
+				db.query(queryString, (err, rows, fields) => {
+				let htmlTableRows = ``;
+				htmlTableRows += `<thead style="font-weight: 700;background-color: #dcdcdc;">
+                    <tr>
+                    <td>Item ID</td>
+                    <td>Item Name</td>                   
+                    </tr>
+                    </thead>`;
+				// Iterate of the rows in the data, use an ES6 "arrow function" to operate on each one
+				rows.forEach((row) => {
+					// Use ES6 string template to create HTML table rows
+					htmlTableRows += `<tr>
+                    <td style="border: 1px solid #7DCEA0;">${row.item_no}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.item_name}</td>
+                </tr>`;
+				});
 
-			db.query(queryString, (err, rows, fields) => {
-				res.json(rows);
+				// HTML for a table
+				let htmlTable = `<table style="width:100%; border: 1px solid black;">${htmlTableRows}</table>`;
+				res.status(200).send(htmlTable);
 			});
 		} catch (e) {
 			log.error(e);

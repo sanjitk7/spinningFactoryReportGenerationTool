@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1=title
+
+    div 
+        table.table.table-hover
+            tr
+                th WID
+                th First Name
+                th Last Name
+            each production in productions
+                tr
+                    td=production.wid
+                    td=production.fname
+                    td=production.lname

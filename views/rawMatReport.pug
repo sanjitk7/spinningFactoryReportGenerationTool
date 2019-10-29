@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1=title
+
+    div 
+        table.table.table-hover
+            tr
+                th THE ITEM CODE
+                th THE ITEM'S NAME
+            each production in productions
+                tr
+                    td=production.item_no
+                    td=production.item_name

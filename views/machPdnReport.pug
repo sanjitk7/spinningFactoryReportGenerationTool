@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1=title
+
+    div 
+        table.table.table-hover
+            tr
+                th Machine ID
+                th Machine Production in Kilos
+                th Machine Waste in Kilos
+            each production in productions
+                tr
+                    td=production.m_id
+                    td=production.machine_production
+                    td=production.machine_waste

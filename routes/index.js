@@ -38,7 +38,29 @@ router.get('/workerPdn', function(req, res) {
 				endDate +
 				"' GROUP BY wid ORDER BY worker_prod ASC";
 			db.query(queryString, (err, rows, fields) => {
-				res.json(rows);
+				let htmlTableRows = ``;
+				htmlTableRows += `<thead style="font-weight: 700;background-color: #dcdcdc;">
+                    <tr>
+                    <td>WID</td>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                    <td> Production Qty (Kilos)</td>
+                    </tr>
+                    </thead>`;
+				// Iterate of the rows in the data, use an ES6 "arrow function" to operate on each one
+				rows.forEach((row) => {
+					// Use ES6 string template to create HTML table rows
+					htmlTableRows += `<tr>
+                    <td style="border: 1px solid #7DCEA0;">${row.wid}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.fname}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.lname}</td>
+                    <td style="border: 1px solid #7DCEA0;">${row.worker_prod}</td>
+                </tr>`;
+				});
+
+				// HTML for a table
+				let htmlTable = `<table style="width:100%; border: 1px solid black;">${htmlTableRows}</table>`;
+				res.status(200).send(htmlTable);
 			});
 		} catch (e) {
 			log.error(e);
@@ -56,10 +78,12 @@ router.get('/idleWorker', function(req, res) {
 		try {
 			const startDate = req.query.startDate;
 			const endDate = req.query.endDate;
-			const queryString = "select distinct wid,fname,lname from workers where wid not in (select workers.wid from spinning_prod inner join workers on spinning_prod.wid=workers.wid where m_date between '" + 
-								startDate + 
-								"' and '" + 
-								endDate + "'group by wid )";
+			const queryString =
+				"select distinct wid,fname,lname from workers where wid not in (select workers.wid from spinning_prod inner join workers on spinning_prod.wid=workers.wid where m_date between '" +
+				startDate +
+				"' and '" +
+				endDate +
+				"'group by wid )";
 			db.query(queryString, (err, rows, fields) => {
 				res.json(rows);
 			});
@@ -79,10 +103,13 @@ router.get('/machPdn', function(req, res) {
 		try {
 			const startDate = req.query.startDate;
 			const endDate = req.query.endDate;
-			const queryString = "select m_id,sum(m_prod)" + " as machine_production ,round(sum(m_waste),2) as machine_waste from spinning_prod where m_date between '" + 
-								startDate + 
-								"' and '" + 
-								endDate + "'group by m_id";
+			const queryString =
+				'select m_id,sum(m_prod)' +
+				" as machine_production ,round(sum(m_waste),2) as machine_waste from spinning_prod where m_date between '" +
+				startDate +
+				"' and '" +
+				endDate +
+				"'group by m_id";
 			db.query(queryString, (err, rows, fields) => {
 				res.json(rows);
 			});
@@ -102,11 +129,13 @@ router.get('/bdnPdn', function(req, res) {
 		try {
 			const startDate = req.query.startDate;
 			const endDate = req.query.endDate;
-			const queryString = "select spinning_type.bid,sum(spinning_prod.m_prod) as building_prod from spinning_prod inner join spinning_type on spinning_prod.m_id=spinning_type.m_id where " +
-								"m_date between '" +
-								 startDate +
-								 "' and '" + 
-								 endDate + "'group by bid";
+			const queryString =
+				'select spinning_type.bid,sum(spinning_prod.m_prod) as building_prod from spinning_prod inner join spinning_type on spinning_prod.m_id=spinning_type.m_id where ' +
+				"m_date between '" +
+				startDate +
+				"' and '" +
+				endDate +
+				"'group by bid";
 			db.query(queryString, (err, rows, fields) => {
 				res.json(rows);
 			});
@@ -126,11 +155,12 @@ router.get('/rawMat', function(req, res) {
 		try {
 			const startDate = req.query.startDate;
 			const endDate = req.query.endDate;
-			const queryString = "select item_no,item_name from raw_material_name where raw_material_name.item_no =(select t.item_code as maximum_used_amt from (select spinning_prod.item_no as item_code ,sum(raw_materials.qty) as item_qty_used from spinning_prod inner join raw_materials on spinning_prod.item_no=raw_materials.item_no and spinning_prod.lot_no=raw_materials.lot_no where m_date between '" +
-								 startDate +
-								 "' and '" +
-								 endDate + 
-								 "' group by spinning_prod.item_no order by item_qty_used desc) as t limit 1)";
+			const queryString =
+				"select item_no,item_name from raw_material_name where raw_material_name.item_no =(select t.item_code as maximum_used_amt from (select spinning_prod.item_no as item_code ,sum(raw_materials.qty) as item_qty_used from spinning_prod inner join raw_materials on spinning_prod.item_no=raw_materials.item_no and spinning_prod.lot_no=raw_materials.lot_no where m_date between '" +
+				startDate +
+				"' and '" +
+				endDate +
+				"' group by spinning_prod.item_no order by item_qty_used desc) as t limit 1)";
 
 			db.query(queryString, (err, rows, fields) => {
 				res.json(rows);

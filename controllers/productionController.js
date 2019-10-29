@@ -1,4 +1,3 @@
-var Production = require('../models/production');
 var mysql = require('mysql');
 var express = require('express');
 var db = require('../db/db');

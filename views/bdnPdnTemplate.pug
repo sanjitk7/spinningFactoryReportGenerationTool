@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to #[em Spinning Mill Production Report ].
+    br
+    br
+    .div
+        form(method="get" action="/production/bdnPdnRep" style="display:block;")
+            fieldset
+                legend Enter Custom Date For Report:
+                label(for='startDate') Start Date: 
+                input#name(type='date', name='startDate', required='')
+                br
+                label(for='endDate') End Date: 
+                input#quantity(type='date', name='endDate', required='')
+                br
+                br
+                input(type='submit', value='Fetch Report' )

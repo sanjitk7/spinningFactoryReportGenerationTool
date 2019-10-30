@@ -39,6 +39,12 @@ exports.production_report = function(req, res) {
 		return;
 	}
 };
+//idle worker template
+exports.idleWorkerTemplate = function(req, res) {
+	async.parallel({}, function(err, results) {
+		res.render('idleWorkerTemplate', { title: 'Find Idle Workers', error: err, data: results });
+	});
+};
 
 //Display Idle workers
 exports.idleWorkerReport = function(req, res) {
@@ -66,6 +72,12 @@ exports.idleWorkerReport = function(req, res) {
 		res.sendStatus(400);
 		return;
 	}
+};
+//machine pdn template
+exports.machPdnTemplate = function(req, res) {
+	async.parallel({}, function(err, results) {
+		res.render('machPdnTemplate', { title: 'Machine-wise Production Report', error: err, data: results });
+	});
 };
 
 //Display Machine Wise Production
@@ -97,6 +109,13 @@ exports.machPdnReport = function(req, res) {
 	}
 };
 
+//building pdn template
+exports.bdnPdnTemplate= function(req, res) {
+	async.parallel({}, function(err, results) {
+		res.render('bdnPdnTemplate', { title: 'Building-wise Production', error: err, data: results });
+	});
+};
+
 //Display Building Wise Data
 exports.bdnPdnReport = function(req, res) {
 	console.log('inside bdnPdn report');
@@ -125,7 +144,12 @@ exports.bdnPdnReport = function(req, res) {
 		return;
 	}
 };
-
+//raw material template
+exports.rawMatTemplate = function(req, res) {
+	async.parallel({}, function(err, results) {
+		res.render('rawMatTemplate', { title: 'Max Raw Material Report', error: err, data: results });
+	});
+};
 //Display Most used raw material
 exports.rawMatReport = function(req, res) {
 	console.log('inside rawMat report');
@@ -157,9 +181,43 @@ exports.rawMatReport = function(req, res) {
 //Display last 3 days of production report
 exports.production_report_last_3_days = function(req, res) {
 	try {
+		var today= new Date();
+		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		console.log(date);
 		console.log('inside prod report: production_report_last_3_days');
-		const startDate = '2019-10-11';
-		const endDate = '2019-10-14';
+		var startDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-4);
+		var endDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1);
+		console.log(startDate);
+		console.log(endDate);
+		const queryString =
+			'SELECT workers.wid,workers.fname,workers.lname,SUM(spinning_prod.m_prod) ' +
+			'AS worker_prod FROM spinning_prod INNER JOIN workers ON spinning_prod.wid=workers.wid WHERE ' +
+			"m_date BETWEEN '" +
+			startDate +
+			"' AND '" +
+			endDate +
+			"' GROUP BY wid ORDER BY worker_prod ASC";
+		db.query(queryString, (err, rows, fields) => {
+			console.log(JSON.stringify(rows));
+			res.render('production_report', { title: 'Production Report', productions: rows });
+		});
+	} catch (e) {
+		console.log('in err catch');
+		log.error(e);
+	}
+};
+
+//Display Yesterday's Report
+exports.production_report_yesterday = function(req, res) {
+	try {
+		var today= new Date();
+		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		console.log(date);
+		console.log('inside prod report: production_yesterday');
+		var startDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1);
+		var endDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1);
+		console.log(startDate);
+		console.log(endDate);
 		const queryString =
 			'SELECT workers.wid,workers.fname,workers.lname,SUM(spinning_prod.m_prod) ' +
 			'AS worker_prod FROM spinning_prod INNER JOIN workers ON spinning_prod.wid=workers.wid WHERE ' +
@@ -180,7 +238,6 @@ exports.production_report_last_3_days = function(req, res) {
 
 //Get prodcution report form
 exports.production_create_get = function(req, res) {
-	// res.send('NOT IMPLEMNTED: Production create GET');
 	res.render('create_production');
 };
 
@@ -215,6 +272,15 @@ exports.production_create_post = function(req, res) {
 				lotNo +
 				")";
 				console.log(queryString);
+				db.query(queryString, (err, result) => {
+					if (err){
+						res.sendStatus(400);
+					}
+					else{
+					let succResponseHtml = `<h2>Successfully Inserted the Production Entry.</h2><br><p>Go back to insert another entry<p>`;
+					res.status(200).send(succResponseHtml);
+					}
+				});
 		}catch (e) {
 			console.log('in err catch');
 			log.error(e);
@@ -225,5 +291,4 @@ else {
 	res.sendStatus(400);
 	return;
 }
-//res.send('NOT IMPLEMNTED: Production create POST');
 };

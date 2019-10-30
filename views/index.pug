@@ -7,15 +7,15 @@ block content
     br
     .container
         form(method="get" action="/production/reports/last_3_days")
-            button(type="submit") Last 3 Days Report
+            button(type="submit") Last 3 Days Worker Production Report
 
-        form(method="get" action="/production/reports/last_week")
-            button(type="submit") Yesterday's Report
+        form(method="get" action="/production/reports/yesterday")
+            button(type="submit") Yesterday's Worker Production Report
 
         style(type="text/css").
             button{
                 background-color:yellow;
-                height:50px;
+                height:100px;
                 width:100px;
                 margin-left:10px;
                 margin-right:10px;

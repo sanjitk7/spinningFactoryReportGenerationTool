@@ -3,7 +3,7 @@ extends layout
 block content
   .main.container
     .row
-      .col-md-6.col-md-offset-3
+      .col-md-6
         h1.display-4.m-b-2 Enter Production Detail
 
         form(method='POST' action='/create_production')
@@ -14,13 +14,22 @@ block content
             label(for='date') Date:
             input#email.form-control(type='date', placeholder='select date' name='date')
           div.form-group
-            label(for='productionQty') Favorite Book:
+            label(for='productionQty') Production Qty:
             input#productionQty.form-control(type='text', placeholder='Enter production qty in Kilos' name='productionQty')
           div.form-group
             label(for='ebCharge') EB Charge:
             input#ebCharge.form-control(type='text', placeholder='Enter EB charge in units' name='ebCharge')
           div.form-group
-            label(for='yarnCount') Yarn Count:
-            input#yarnCount.form-control(type='dropdown', placeholder='Select yarn count' name='yarnCount')
-          
+            label.control-label.requiredField(for='yarnCount') Yarn Count: 
+              span.asteriskField *
+              select#propertyType.select.form-control.input-lg(form='addProperty', name='yarnCount')
+                option(value='0') -- Select --
+                option(value='2') 2
+                option(value='10') 10
+                option(value='20') 20
+                option(value='30') 30
+                option(value='40') 40
+                option(value='50') 50
+
+                  
           button.btn.btn-primary(type='submit') Save

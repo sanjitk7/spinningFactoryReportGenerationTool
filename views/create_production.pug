@@ -6,13 +6,13 @@ block content
       .col-md-6
         h1.display-4.m-b-2 Enter Production Detail
 
-        form(method='POST' action='/create_production')
+        form(method='POST' action='/production/create')
           div.form-group
-            label(for='wid') Worker Id:
-            input#name.form-control(type='text', placeholder='Enter worker Id' name='wid')
+            label(for='spinningCode') Spinning Code:
+            input#spinningCode.form-control(type='text', style="width:55px", required='true', placeholder='Code' name='spinningCode')
           div.form-group
             label(for='date') Date:
-            input#email.form-control(type='date', placeholder='select date' name='date')
+            input#date.form-control(type='date', placeholder='select date' name='date')
           div.form-group
             label(for='productionQty') Production Qty:
             input#productionQty.form-control(type='text', placeholder='Enter production qty in Kilos' name='productionQty')
@@ -30,6 +30,17 @@ block content
                 option(value='30') 30
                 option(value='40') 40
                 option(value='50') 50
-
+          div.form-group
+            label(for='wasteQty') Waste Qty:
+            input#wasteQty.form-control(type='text', placeholder='Enter waste qty in kilos' name='wasteQty')
+          div.form-group
+            label(for='itemNo') Item Number:
+            input#itemNo.form-control(type='text', style="width:60px", required='true', placeholder='Item#' name='itemNo')
+          div.form-group
+            label(for='lotNo') Lot Number:
+            input#lotNo.form-control(type='text', placeholder='Enter lot number' name='lotNo')
+          div.form-group
+            label(for='wid') Worker Id:
+            input#wid.form-control(type='text', placeholder='Enter worker Id' name='wid')
                   
           button.btn.btn-primary(type='submit') Save

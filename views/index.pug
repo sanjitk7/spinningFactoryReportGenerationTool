@@ -17,6 +17,8 @@ block content
                 background-color:yellow;
                 height:50px;
                 width:100px;
+                margin-left:10px;
+                margin-right:10px;
             }
 
             button:hover{background-color:orange;}
@@ -25,5 +27,19 @@ block content
 
             .container {
                 display: flex;
-                justify-content: space-between;
+                justify-content: stretch;
             }
+    br
+    br
+    .div
+        form(method="get" action="/production/reports" style="display:block;")
+            fieldset
+                legend Enter Custom Date For Report:
+                label(for='startDate') Start Date: 
+                input#name(type='date', name='startDate', required='')
+                br
+                label(for='endDate') End Date: 
+                input#quantity(type='date', name='endDate', required='')
+                br
+                br
+                input(type='submit', value='Fetch Report' )

@@ -186,5 +186,44 @@ exports.production_create_get = function(req, res) {
 
 //Insert production report
 exports.production_create_post = function(req, res) {
-	res.send('NOT IMPLEMNTED: Production create POST');
+	if (req && req['body']){
+		try{
+			console.log("inside prod create post");
+			var spinningCode = req['body']['spinningCode'];
+			var date = req['body']['date'];
+			var productionQty = req['body']['productionQty'];
+			var wasteQty = req['body']['wasteQty'];
+			var ebCharge = req['body']['ebCharge'];
+			var yarnCount = req['body']['yarnCount'];
+			var wid = req['body']['wid'];
+			var itemNo = req['body']['itemNo'];
+			var lotNo = req['body']['lotNo'];
+			var date_frmt = date.split("-");
+			var date_reqired = date_frmt[2] + "/" + date_frmt[1] + "/" + date_frmt[0];
+			console.log(date_reqired);
+			console.log(req['body']);
+			const queryString =
+				'insert into spin.spinning_prod(m_id,m_date,m_eb,m_prod,m_yarn_count,m_waste,wid,item_no,lot_no) values(' +
+				"'" + spinningCode + "'," +
+				"str_to_date('"+ date_reqired +"','%d/%m/%Y'),"+ 
+				ebCharge + "," +
+				productionQty + "," +
+				yarnCount + "," +
+				wasteQty + "," +
+				wid + "," +
+				"'" + itemNo + "'," +
+				lotNo +
+				")";
+				console.log(queryString);
+		}catch (e) {
+			console.log('in err catch');
+			log.error(e);
+		}
+		
+}
+else {
+	res.sendStatus(400);
+	return;
+}
+//res.send('NOT IMPLEMNTED: Production create POST');
 };

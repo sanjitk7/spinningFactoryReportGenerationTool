@@ -7,7 +7,8 @@ Data is stored in mySQL database by default on the above mentioned entities.
 **Frontend**: nodeJS
 NodeJS is used here to retrive data from the backend sql with express.js framework.
 
-~Utilites~:
+***Utilites***:
+
 1. Insersion of production details
 2. Finding idle workers
 3. Worker production report
@@ -21,7 +22,7 @@ NodeJS is used here to retrive data from the backend sql with express.js framewo
 ![] (images/FLOW_ARCH.jpg)
 
 **Backend:**
-![] (images/flowDiagram.jpg)
+![] (images/FlowDiagram.jpg)
 
 # Installation
 
@@ -53,5 +54,6 @@ npm start
 **Start Application:**
 
 
-*open a browser and go to the [homeUrl]*(http://localhost:3000/production) : 
+*open a browser and go to the [URL](http://localhost:3000/production)* : 
+
 http://localhost:3000/production

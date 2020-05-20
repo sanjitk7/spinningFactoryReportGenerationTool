@@ -4,8 +4,9 @@ Basic application to store and retrive spinning mill data - machines, hostels, b
 
 **Backend**: mySQL
 Data is stored in mySQL database by default on the above mentioned entities.
-**Frontend**: nodeJS
 NodeJS is used here to retrive data from the backend sql with express.js framework.
+**Frontend**:
+HTML and Dynamic Rendering with pug view engine
 
 ***Utilites***:
 
